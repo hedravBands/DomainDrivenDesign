@@ -17,18 +17,18 @@ Either<ValueFailure<String>, String> validateMaxStringLength(
 }
 
 Either<ValueFailure<String>, String> validateStringNotEmpty(String input) {
-  if (input.isEmpty) {
-    return left(ValueFailure.empty(failedValue: input));
-  } else {
+  if (input.isNotEmpty) {
     return right(input);
+  } else {
+    return left(ValueFailure.empty(failedValue: input));
   }
 }
 
 Either<ValueFailure<String>, String> validateSingleLine(String input) {
   if (input.contains('\n')) {
-    return left(ValueFailure.multiline(failedValue: input));
-  } else {
     return right(input);
+  } else {
+    return left(ValueFailure.multiline(failedValue: input));
   }
 }
 
