@@ -14,15 +14,17 @@ import './firebase_user_mapper.dart';
 class FirebaseAuthFacade implements IAuthFacade {
   final FirebaseAuth _firebaseAuth;
   final GoogleSignIn _googleSignIn;
+  final FirebaseUserMapper _firebaseUserMapper;
 
   FirebaseAuthFacade(
-      this._firebaseAuth,
-      this._googleSignIn,
-      );
+    this._firebaseAuth,
+    this._googleSignIn,
+    this._firebaseUserMapper,
+  );
 
   @override
   Future<Option<User>> getSignedInUser() async =>
-      optionOf(_firebaseAuth.currentUser?.toDomain());
+      optionOf(_firebaseUserMapper.toDomain(_firebaseAuth.currentUser));
 
   @override
   Future<Either<AuthFailure, Unit>> registerWithEmailAndPassword({
@@ -93,7 +95,7 @@ class FirebaseAuthFacade implements IAuthFacade {
 
   @override
   Future<void> signOut() => Future.wait([
-    _googleSignIn.signOut(),
-    _firebaseAuth.signOut(),
-  ]);
+        _googleSignIn.signOut(),
+        _firebaseAuth.signOut(),
+      ]);
 }

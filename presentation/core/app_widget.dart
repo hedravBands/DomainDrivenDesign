@@ -4,8 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:crystalkingdom/application/auth/auth_bloc.dart';
 import 'package:crystalkingdom/injection.dart';
 import 'package:crystalkingdom/presentation/routes/router.gr.dart'
-as app_router;
-import 'package:crystalkingdom/presentation/sign_in/sign_in_page.dart';
+    as app_router;
 
 class AppWidget extends StatelessWidget {
   @override
@@ -14,7 +13,7 @@ class AppWidget extends StatelessWidget {
       providers: [
         BlocProvider(
           create: (context) =>
-          getIt<AuthBloc>()..add(const AuthEvent.authCheckRequested()),
+              getIt<AuthBloc>()..add(const AuthEvent.authCheckRequested()),
         )
       ],
       child: MaterialApp(

@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/services.dart';
 import 'package:injectable/injectable.dart';
 import 'package:dartz/dartz.dart';
 import 'package:kt_dart/kt.dart';
@@ -20,20 +19,20 @@ class NoteRepository implements INoteRepository {
   Stream<Either<NoteFailure, KtList<Note>>> watchAll() async* {
     final userDoc = await _firestore.userDocument();
     yield* userDoc.noteCollection
-        .orderBy('serverTimeStamp', descending: true)
+        //.orderBy('serverTimeStamp', descending: true)
         .snapshots()
         .map(
           (snapshot) => right<NoteFailure, KtList<Note>>(
-        snapshot.docs
-            .map((doc) => NoteDto.fromFirestore(doc).toDomain())
-            .toImmutableList(),
-      ),
-    )
+            snapshot.docs
+                .map((doc) => NoteDto.fromFirestore(doc).toDomain())
+                .toImmutableList(),
+          ),
+        )
         .onErrorReturnWith((e) {
       if (e is FirebaseException && e.message.contains('PERMISSION_DENIED')) {
         return left(const NoteFailure.insufficientPermission());
       } else {
-        // log.error(e.toString());
+        //print(e.toString());
         return left(const NoteFailure.unexpected());
       }
     });
@@ -47,16 +46,16 @@ class NoteRepository implements INoteRepository {
         .snapshots()
         .map(
           (snapshot) =>
-          snapshot.docs.map((doc) => NoteDto.fromFirestore(doc).toDomain()),
-    )
+              snapshot.docs.map((doc) => NoteDto.fromFirestore(doc).toDomain()),
+        )
         .map(
           (notes) => right<NoteFailure, KtList<Note>>(
-        notes
-            .where((note) =>
-            note.todos.getOrCrash().any((todoItem) => !todoItem.done))
-            .toImmutableList(),
-      ),
-    )
+            notes
+                .where((note) =>
+                    note.todos.getOrCrash().any((todoItem) => !todoItem.done))
+                .toImmutableList(),
+          ),
+        )
         .onErrorReturnWith((e) {
       if (e is FirebaseException && e.message.contains('PERMISSION_DENIED')) {
         return left(const NoteFailure.insufficientPermission());

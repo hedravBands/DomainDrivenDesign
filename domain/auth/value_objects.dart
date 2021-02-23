@@ -24,7 +24,7 @@ class Password extends ValueObject<String> {
   factory Password(String input) {
     assert(input != null);
     return Password._(
-      validateEmailAddress(input),
+      validatePassword(input),
     );
   }
 

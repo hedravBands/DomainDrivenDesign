@@ -12,21 +12,21 @@ class SignInForm extends StatelessWidget {
     return BlocConsumer<SignInFormBloc, SignInFormState>(
       listener: (context, state) {
         state.authFailureOrSuccessOption.fold(
-              () {},
-              (either) => either.fold(
-                (failure) {
+          () {},
+          (either) => either.fold(
+            (failure) {
               FlushbarHelper.createError(
                 message: failure.map(
                   cancelledByUser: (_) => 'Cancelled',
                   serverError: (_) => 'Server error',
                   emailAlreadyInUse: (_) => 'Email already in use',
                   invalidEmailAndPasswordCombination: (_) =>
-                  'Invalid email and password combination',
+                      'Invalid email and password combination',
                 ),
               ).show(context);
             },
-                (_) {
-              ExtendedNavigator.of(context).replace(Routes.gamePage);
+            (_) {
+              ExtendedNavigator.of(context).replace(Routes.notesOverviewPage);
               context
                   .bloc<AuthBloc>()
                   .add(const AuthEvent.authCheckRequested());
@@ -62,11 +62,11 @@ class SignInForm extends StatelessWidget {
                     .value
                     .fold(
                       (f) => f.maybeMap(
-                    invalidEmail: (_) => 'Invalid Email',
-                    orElse: () => null,
-                  ),
+                        invalidEmail: (_) => 'Invalid Email',
+                        orElse: () => null,
+                      ),
                       (_) => null,
-                ),
+                    ),
               ),
               const SizedBox(height: 8),
               TextFormField(
@@ -82,11 +82,11 @@ class SignInForm extends StatelessWidget {
                 validator: (_) =>
                     context.bloc<SignInFormBloc>().state.password.value.fold(
                           (f) => f.maybeMap(
-                        shortPassword: (_) => 'Short Password',
-                        orElse: () => null,
-                      ),
+                            shortPassword: (_) => 'Short Password',
+                            orElse: () => null,
+                          ),
                           (_) => null,
-                    ),
+                        ),
               ),
               const SizedBox(height: 8),
               Row(
@@ -95,9 +95,9 @@ class SignInForm extends StatelessWidget {
                     child: FlatButton(
                       onPressed: () {
                         context.bloc<SignInFormBloc>().add(
-                          const SignInFormEvent
-                              .signInWithEmailAndPasswordPressed(),
-                        );
+                              const SignInFormEvent
+                                  .signInWithEmailAndPasswordPressed(),
+                            );
                       },
                       child: const Text('SIGN IN'),
                     ),
@@ -106,9 +106,9 @@ class SignInForm extends StatelessWidget {
                     child: FlatButton(
                       onPressed: () {
                         context.bloc<SignInFormBloc>().add(
-                          const SignInFormEvent
-                              .registerWithEmailAndPasswordPressed(),
-                        );
+                              const SignInFormEvent
+                                  .registerWithEmailAndPasswordPressed(),
+                            );
                       },
                       child: const Text('REGISTER'),
                     ),

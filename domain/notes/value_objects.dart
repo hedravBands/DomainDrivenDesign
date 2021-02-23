@@ -7,7 +7,6 @@ import 'package:crystalkingdom/domain/core/value_validators.dart';
 import 'package:dartz/dartz.dart';
 import 'package:kt_dart/kt.dart';
 
-
 class NoteBody extends ValueObject<String> {
   @override
   final Either<ValueFailure<String>, String> value;
@@ -17,8 +16,7 @@ class NoteBody extends ValueObject<String> {
   factory NoteBody(String input) {
     assert(input != null);
     return NoteBody._(
-      validateMaxStringLength(input, maxLength)
-          .flatMap(validateStringNotEmpty),
+      validateMaxStringLength(input, maxLength).flatMap(validateStringNotEmpty),
     );
   }
 
