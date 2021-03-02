@@ -12,7 +12,7 @@ class SplashPage extends StatelessWidget {
         state.map(
           initial: (_) {},
           authenticated: (_) =>
-              ExtendedNavigator.of(context).pushNotesOverviewPage(),
+              ExtendedNavigator.of(context).pushGameOverviewPage(),
           unauthenticated: (_) =>
               ExtendedNavigator.of(context).pushSignInPage(),
           //{print('No No No, not authenticated!')},

@@ -10,7 +10,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 
 import '../../domain/notes/note.dart';
-import '../game/game.dart';
+import '../game/game_overview/game_overview_page.dart';
 import '../notes/note_form/note_form_page.dart';
 import '../notes/notes_overview/notes_overview_page.dart';
 import '../sign_in/sign_in_page.dart';
@@ -19,13 +19,13 @@ import '../splash/splash_page.dart';
 class Routes {
   static const String splashPage = '/';
   static const String signInPage = '/sign-in-page';
-  static const String gamePage = '/game-page';
+  static const String gameOverviewPage = '/game-overview-page';
   static const String notesOverviewPage = '/notes-overview-page';
   static const String noteFormPage = '/note-form-page';
   static const all = <String>{
     splashPage,
     signInPage,
-    gamePage,
+    gameOverviewPage,
     notesOverviewPage,
     noteFormPage,
   };
@@ -37,7 +37,7 @@ class Router extends RouterBase {
   final _routes = <RouteDef>[
     RouteDef(Routes.splashPage, page: SplashPage),
     RouteDef(Routes.signInPage, page: SignInPage),
-    RouteDef(Routes.gamePage, page: GamePage),
+    RouteDef(Routes.gameOverviewPage, page: GameOverviewPage),
     RouteDef(Routes.notesOverviewPage, page: NotesOverviewPage),
     RouteDef(Routes.noteFormPage, page: NoteFormPage),
   ];
@@ -56,9 +56,9 @@ class Router extends RouterBase {
         settings: data,
       );
     },
-    GamePage: (data) {
+    GameOverviewPage: (data) {
       return MaterialPageRoute<dynamic>(
-        builder: (context) => GamePage(),
+        builder: (context) => GameOverviewPage(),
         settings: data,
       );
     },
@@ -91,7 +91,8 @@ extension RouterExtendedNavigatorStateX on ExtendedNavigatorState {
 
   Future<dynamic> pushSignInPage() => push<dynamic>(Routes.signInPage);
 
-  Future<dynamic> pushGamePage() => push<dynamic>(Routes.gamePage);
+  Future<dynamic> pushGameOverviewPage() =>
+      push<dynamic>(Routes.gameOverviewPage);
 
   Future<dynamic> pushNotesOverviewPage() =>
       push<dynamic>(Routes.notesOverviewPage);
